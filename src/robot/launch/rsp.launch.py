@@ -18,7 +18,6 @@ def generate_launch_description():
     # Read URDF file directly
     with open(urdf_file, 'r') as infp:
         robot_description = infp.read()   
-    )
 
     # Robot State Publisher Node
     rsp_node = Node(
