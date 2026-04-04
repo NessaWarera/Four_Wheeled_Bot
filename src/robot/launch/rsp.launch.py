@@ -17,17 +17,13 @@ def generate_launch_description():
         'rover.urdf'   # still .urdf but will be processed as xacro
     )
 
-    # Process URDF using xacro (even if extension is .urdf)
-    robot_description = ParameterValue(
-        Command(['xacro', urdf_file]),
-        value_type=str
-    )
+    robot_description = Command(['cat ', urdf_file])
 
     use_sim_time = LaunchConfiguration('use_sim_time')
 
     declare_use_sim_time_cmd = DeclareLaunchArgument(
         'use_sim_time',
-        default_value='false',
+        default_value='true',
         description='Use simulation clock if true'
     )
 
