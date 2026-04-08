@@ -34,7 +34,7 @@ If the robot doesn't spawn or Gazebo doesn't launch, troubleshooting will be req
 - Check the URDF file paths.
 - Ensure robot_state_publisher is running.
 
-## SENSOR INTEGRATION
+## STEP 4: SENSOR INTEGRATION
 This step involves integrating sensors to the robot. Attach the sensor plug ins to the URDF. You can add your preffered sensors. In this project, a camera, Lidar Sensor and IMU have been attached. Ensure the URDF format is correct by checking the gazebo github page which has the format for a variety of sensors. Spawn the robot in Gazebo again to ensure that the sensora have been properly added. 
 
 ## CHALLENGES FACED
