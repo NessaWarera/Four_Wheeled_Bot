@@ -564,4 +564,34 @@
   </sensor>
 </gazebo>
 
+<ros2_control name="RobotSystem" type="system">
+  <hardware>
+    <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+  </hardware>
+
+  <joint name="BackLeftWheel_link_joint">
+    <command_interface name="velocity"/>
+    <state_interface name="velocity"/>
+    <state_interface name="position"/>
+  </joint>
+
+  <joint name="BackRightWheel_link_joint">
+    <command_interface name="velocity"/>
+    <state_interface name="velocity"/>
+    <state_interface name="position"/>
+  </joint>
+
+  <joint name="FrontLeftWheel_link_joint">
+    <command_interface name="velocity"/>
+    <state_interface name="velocity"/>
+    <state_interface name="position"/>
+  </joint>
+
+  <joint name="FrontRightWheel_link_joint">
+    <command_interface name="velocity"/>
+    <state_interface name="velocity"/>
+    <state_interface name="position"/>
+  </joint>
+
+  </ros2_control>
 </robot>

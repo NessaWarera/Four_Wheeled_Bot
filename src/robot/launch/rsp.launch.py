@@ -14,7 +14,7 @@ def generate_launch_description():
     urdf_file = os.path.join(pkg_share, 'urdf', 'rover.urdf')
 
     # Read URDF using XACRO
-    robot_description = ParameterValue(
+    robot_description_content = ParameterValue(
         Command(['xacro ', urdf_file]),
         value_type=str
     )
@@ -34,7 +34,7 @@ def generate_launch_description():
         parameters=[
             {
                 'use_sim_time': use_sim_time,
-                'robot_description': robot_description
+                'robot_description': robot_description_content
             }
         ],
         output='screen'

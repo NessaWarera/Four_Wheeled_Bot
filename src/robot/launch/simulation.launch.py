@@ -4,6 +4,8 @@ from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, TimerAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
+from launch.substitutions import Command
+from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
@@ -14,6 +16,21 @@ def generate_launch_description():
         get_package_share_directory(package_name),
         'world',
         'world.sdf'
+    )
+    urdf_file = os.path.join(
+        get_package_share_directory(package_name),
+        'urdf',
+        'rover.urdf'  
+    )
+    controller_file = os.path.join(
+        get_package_share_directory(package_name), 
+        'config', 
+        'controller.yaml'
+    )
+    
+    robot_description = ParameterValue(
+        Command(['xacro', urdf_file]),
+        value_type=str
     )
 
     # Robot State Publisher
@@ -56,6 +73,36 @@ def generate_launch_description():
             )
         ]
     )
+    controller_manager = TimerAction(
+        period=6.0,
+        actions=[
+            Node(
+                package='controller_manager',
+                executable='ros2_control_node',
+                parameters=[
+                    {'robot_description': robot_description},
+                    controller_file
+                ],
+                output='screen'
+            )
+        ]
+    )
+
+    spawn_controllers = TimerAction(
+        period=8.0,
+        actions=[
+            Node(
+                package="controller_manager",
+                executable="spawner",
+                arguments=["joint_state_broadcaster"],
+            ),
+            Node(
+                package="controller_manager",
+                executable="spawner",
+                arguments=["diff_drive_controller"],
+            ),
+        ]
+    )
 
     # Bridge
     bridge = Node(
@@ -73,5 +120,7 @@ def generate_launch_description():
         rsp,
         gazebo,
         spawn_entity,
+        controller_manager,  
+        spawn_controllers,
         bridge,
     ])
